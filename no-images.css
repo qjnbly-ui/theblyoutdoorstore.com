@@ -282,6 +282,22 @@ body.gate-locked {
   font-size: .82rem;
 }
 
+.gate-card .gate-credit {
+  margin: 22px auto 0;
+  color: var(--muted);
+  font-size: .75rem;
+  letter-spacing: .04em;
+}
+
+.gate-credit a {
+  color: var(--green);
+  font-weight: 800;
+}
+
+.gate-credit a:hover {
+  color: #00a65a;
+}
+
 @media (max-width: 520px) {
   .coming-soon-gate {
     padding: 14px;
