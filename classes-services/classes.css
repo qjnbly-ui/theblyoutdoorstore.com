@@ -1,0 +1,61 @@
+.services-coming-soon {
+  position: relative;
+  min-height: 680px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.services-photo,
+.services-shade {
+  position: absolute;
+  inset: 0;
+}
+
+.services-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+}
+
+.services-shade {
+  background: linear-gradient(90deg, rgba(40, 35, 41, .92), rgba(40, 35, 41, .48) 58%, rgba(40, 35, 41, .12));
+}
+
+.services-message {
+  position: relative;
+  z-index: 1;
+}
+
+.services-message h1 {
+  margin: 8px 0 18px;
+  font-family: Oswald, sans-serif;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: .95;
+  text-transform: uppercase;
+}
+
+.services-message > p:not(.eyebrow) {
+  max-width: 640px;
+  font-size: 1.08rem;
+}
+
+@media (max-width: 600px) {
+  .services-coming-soon {
+    min-height: 570px;
+  }
+
+  .services-photo img {
+    object-position: 48% center;
+  }
+
+  .services-shade {
+    background: rgba(40, 35, 41, .72);
+  }
+
+  .services-message h1 {
+    font-size: 4.2rem;
+  }
+}
