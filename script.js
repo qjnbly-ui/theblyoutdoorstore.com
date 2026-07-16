@@ -1,10 +1,6 @@
 const toggle = document.querySelector('.menu-toggle');
 const menu = document.querySelector('#main-menu');
-const gate = document.querySelector('#coming-soon-gate');
-const gateForm = document.querySelector('#gate-form');
-const passwordInput = document.querySelector('#site-password');
-const gateError = document.querySelector('#gate-error');
-const accessKey = 'bly-development-access';
+const introKey = 'bly-intro-played';
 const carousel = document.querySelector('.photo-carousel');
 const slides = [...document.querySelectorAll('.carousel-slide')];
 const slideButtons = [...document.querySelectorAll('.carousel-status button')];
@@ -57,32 +53,68 @@ contactForm?.addEventListener('submit', (event) => {
   window.location.href = `mailto:info@theblyoutdoorstore.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
-function unlockSite() {
-  gate?.classList.add('is-unlocked');
-  document.body.classList.remove('gate-locked');
+function playSiteIntro() {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const logo = document.querySelector('.home-logo img');
+  const pagePhoto = document.querySelector('.carousel-slide.active, .about-hero > img, .services-photo img, .contact-hero > img, .gallery-cards img');
+
+  if (reducedMotion || !logo || sessionStorage.getItem(introKey) === 'true') {
+    document.body.classList.add('site-entered');
+    return;
+  }
+
+  sessionStorage.setItem(introKey, 'true');
+  document.body.classList.add('intro-running');
+
+  const intro = document.createElement('div');
+  intro.className = 'brand-intro';
+  intro.setAttribute('aria-hidden', 'true');
+
+  if (pagePhoto) {
+    const introPhoto = pagePhoto.cloneNode(true);
+    introPhoto.className = 'intro-photo';
+    introPhoto.removeAttribute('loading');
+    introPhoto.removeAttribute('fetchpriority');
+    intro.append(introPhoto);
+  }
+
+  const introLogo = logo.cloneNode(true);
+  introLogo.className = 'intro-mark';
+  introLogo.removeAttribute('fetchpriority');
+  intro.append(introLogo);
+  document.body.append(intro);
+
+  window.setTimeout(() => {
+    const introBox = introLogo.getBoundingClientRect();
+    const destinationBox = logo.getBoundingClientRect();
+
+    document.body.classList.remove('intro-running');
+    document.body.classList.add('site-entered');
+    intro.classList.add('is-settling');
+
+    const moveX = destinationBox.left + destinationBox.width / 2 - (introBox.left + introBox.width / 2);
+    const moveY = destinationBox.top + destinationBox.height / 2 - (introBox.top + introBox.height / 2);
+    const scale = destinationBox.width / introBox.width;
+
+    document.body.classList.add('logo-landed');
+
+    introLogo.getAnimations().forEach((animation) => animation.cancel());
+    introLogo.animate([
+      { opacity: 1, filter: 'blur(0)', transform: 'translate(0, 0) scale(1)' },
+      { opacity: 0, filter: 'blur(0)', transform: `translate(${moveX}px, ${moveY}px) scale(${scale})` }
+    ], {
+      duration: 900,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      fill: 'forwards'
+    });
+  }, 1120);
+
+  window.setTimeout(() => {
+    intro.remove();
+  }, 2100);
 }
 
-if (gate) {
-  if (sessionStorage.getItem(accessKey) === 'granted') {
-    unlockSite();
-  } else {
-    document.body.classList.add('gate-locked');
-    window.addEventListener('load', () => passwordInput?.focus());
-  }
-}
-
-gateForm?.addEventListener('submit', (event) => {
-  event.preventDefault();
-
-  if (passwordInput.value === 'Dave26') {
-    sessionStorage.setItem(accessKey, 'granted');
-    gateError.textContent = '';
-    unlockSite();
-  } else {
-    gateError.textContent = 'That password is incorrect. Please try again.';
-    passwordInput.select();
-  }
-});
+playSiteIntro();
 
 toggle?.addEventListener('click', () => {
   const open = toggle.getAttribute('aria-expanded') === 'true';
