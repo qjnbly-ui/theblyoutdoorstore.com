@@ -56,7 +56,6 @@ contactForm?.addEventListener('submit', (event) => {
 function playSiteIntro() {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const logo = document.querySelector('.home-logo img');
-  const pagePhoto = document.querySelector('.carousel-slide.active, .about-hero > img, .services-photo img, .contact-hero > img, .gallery-cards img');
 
   if (reducedMotion || !logo || sessionStorage.getItem(introKey) === 'true') {
     document.body.classList.add('site-entered');
@@ -69,14 +68,6 @@ function playSiteIntro() {
   const intro = document.createElement('div');
   intro.className = 'brand-intro';
   intro.setAttribute('aria-hidden', 'true');
-
-  if (pagePhoto) {
-    const introPhoto = pagePhoto.cloneNode(true);
-    introPhoto.className = 'intro-photo';
-    introPhoto.removeAttribute('loading');
-    introPhoto.removeAttribute('fetchpriority');
-    intro.append(introPhoto);
-  }
 
   const introLogo = logo.cloneNode(true);
   introLogo.className = 'intro-mark';
@@ -103,7 +94,7 @@ function playSiteIntro() {
       { opacity: 1, filter: 'blur(0)', transform: 'translate(0, 0) scale(1)' },
       { opacity: 0, filter: 'blur(0)', transform: `translate(${moveX}px, ${moveY}px) scale(${scale})` }
     ], {
-      duration: 900,
+      duration: 2000,
       easing: 'cubic-bezier(.22, 1, .36, 1)',
       fill: 'forwards'
     });
@@ -111,7 +102,7 @@ function playSiteIntro() {
 
   window.setTimeout(() => {
     intro.remove();
-  }, 2100);
+  }, 3400);
 }
 
 playSiteIntro();
