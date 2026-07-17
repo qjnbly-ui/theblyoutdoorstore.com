@@ -90,9 +90,7 @@
   inset: 0;
   content: "";
   pointer-events: none;
-  background:
-    linear-gradient(rgba(255, 255, 255, .18), transparent 22%),
-    repeating-linear-gradient(0deg, rgba(104, 76, 46, .025) 0 1px, transparent 1px 5px);
+  background: linear-gradient(rgba(255, 255, 255, .18), transparent 22%);
 }
 
 .rodeo-heading,
@@ -174,9 +172,7 @@
   inset: 0;
   content: "";
   pointer-events: none;
-  background:
-    linear-gradient(135deg, rgba(151, 35, 32, .2), transparent 38%),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, .025) 0 1px, transparent 1px 80px);
+  background: linear-gradient(135deg, rgba(151, 35, 32, .2), transparent 38%);
 }
 
 .service-tradition-layout {
