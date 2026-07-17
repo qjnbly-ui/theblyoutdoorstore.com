@@ -1,6 +1,6 @@
 const toggle = document.querySelector('.menu-toggle');
 const menu = document.querySelector('#main-menu');
-const introKey = 'bly-intro-played';
+const introKey = 'bly-intro-played-v2';
 const carousel = document.querySelector('.photo-carousel');
 const slides = [...document.querySelectorAll('.carousel-slide')];
 const slideButtons = [...document.querySelectorAll('.carousel-status button')];
@@ -69,14 +69,18 @@ function playSiteIntro() {
   intro.className = 'brand-intro';
   intro.setAttribute('aria-hidden', 'true');
 
+  const introFlare = document.createElement('div');
+  introFlare.className = 'intro-flare';
+
   const introLogo = logo.cloneNode(true);
   introLogo.className = 'intro-mark';
   introLogo.removeAttribute('fetchpriority');
-  intro.append(introLogo);
+  intro.append(introFlare, introLogo);
   document.body.append(intro);
 
   window.setTimeout(() => {
     const introBox = introLogo.getBoundingClientRect();
+    const flareBox = introFlare.getBoundingClientRect();
     const destinationBox = logo.getBoundingClientRect();
 
     document.body.classList.remove('intro-running');
@@ -86,8 +90,22 @@ function playSiteIntro() {
     const moveX = destinationBox.left + destinationBox.width / 2 - (introBox.left + introBox.width / 2);
     const moveY = destinationBox.top + destinationBox.height / 2 - (introBox.top + introBox.height / 2);
     const scale = destinationBox.width / introBox.width;
+    const flareMoveX = destinationBox.left + destinationBox.width / 2 - (flareBox.left + flareBox.width / 2);
+    const flareMoveY = destinationBox.top + destinationBox.height / 2 - (flareBox.top + flareBox.height / 2);
+    const flareScale = Math.max(destinationBox.width / flareBox.width, .08);
 
     document.body.classList.add('logo-landed');
+
+    introFlare.getAnimations().forEach((animation) => animation.cancel());
+    introFlare.animate([
+      { opacity: .72, filter: 'blur(11px) drop-shadow(0 0 16px rgba(218, 166, 55, .22)) drop-shadow(0 0 18px rgba(0, 139, 75, .18))', transform: 'translate(0, 0) scale(1) rotate(18deg)' },
+      { opacity: .58, offset: .68, filter: 'blur(7px) drop-shadow(0 0 10px rgba(218, 166, 55, .16)) drop-shadow(0 0 12px rgba(0, 139, 75, .13))', transform: `translate(${flareMoveX * .72}px, ${flareMoveY * .72}px) scale(${Math.max(flareScale * 2.1, .2)}) rotate(108deg)` },
+      { opacity: 0, filter: 'blur(2px)', transform: `translate(${flareMoveX}px, ${flareMoveY}px) scale(${flareScale}) rotate(172deg)` }
+    ], {
+      duration: 2000,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      fill: 'forwards'
+    });
 
     introLogo.getAnimations().forEach((animation) => animation.cancel());
     introLogo.animate([
