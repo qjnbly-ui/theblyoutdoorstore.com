@@ -23,6 +23,7 @@ function getPacificDate() {
 function showBirthdayAnnouncement() {
   const birthday = '2026-07-18';
   const existingAnnouncement = document.querySelector('.birthday-announcement');
+  const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
 
   if (getPacificDate() !== birthday) {
     existingAnnouncement?.remove();
@@ -32,17 +33,25 @@ function showBirthdayAnnouncement() {
   if (existingAnnouncement) return;
 
   const announcement = document.createElement('aside');
-  announcement.className = 'birthday-announcement';
+  announcement.className = `birthday-announcement ${isHomePage ? 'birthday-announcement-home' : ''}`;
   announcement.setAttribute('aria-label', 'Birthday announcement');
   announcement.innerHTML = `
     <p><span class="birthday-kicker">Today we celebrate our owner</span>
       <strong>Happy Birthday, Dave Wilson!</strong>
       <span class="birthday-wish">From all of us at The Bly Outdoor Store</span>
     </p>
+    ${isHomePage ? '' : `
+      <span class="birthday-wildlife-runner" aria-hidden="true">
+        <i class="birthday-wildlife-shadow"></i>
+        <span class="birthday-wildlife-sprite">
+          <img src="/assets/cougar-run-sprite.png" alt="">
+        </span>
+      </span>
+    `}
   `;
 
   document.body.prepend(announcement);
-  scheduleBirthdayConfetti();
+  if (isHomePage) scheduleBirthdayConfetti();
 }
 
 function launchBirthdayConfetti() {
