@@ -1,0 +1,167 @@
+.birthday-announcement {
+  position: relative;
+  z-index: 30;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 18px 20px 20px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 15% 50%, rgba(255, 220, 92, .28), transparent 26%),
+    radial-gradient(circle at 85% 40%, rgba(255, 220, 92, .22), transparent 24%),
+    linear-gradient(115deg, #006f3d, #008b4b 48%, #006f3d);
+  border-bottom: 5px solid #daa637;
+  box-shadow: 0 8px 24px rgba(40, 35, 41, .2);
+  text-align: center;
+}
+
+.birthday-announcement::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 225, 117, .3) 48%, rgba(255, 255, 255, .32) 50%, transparent 68%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.birthday-announcement.is-celebrating {
+  animation: birthday-banner-glow 1.55s ease-out both;
+}
+
+.birthday-announcement.is-celebrating::after {
+  animation: birthday-banner-sweep 1.25s ease-out both;
+}
+
+.birthday-announcement p {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.birthday-announcement strong {
+  font-family: Oswald, sans-serif;
+  font-size: clamp(2.1rem, 5vw, 4.35rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, .18);
+}
+
+.birthday-kicker,
+.birthday-wish {
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.birthday-kicker {
+  color: #ffe175;
+  font-size: .72rem;
+}
+
+.birthday-wish {
+  margin-top: 7px;
+  font-size: .68rem;
+}
+
+.birthday-confetti-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 8999;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.birthday-confetti-screen i {
+  position: absolute;
+  top: var(--confetti-top);
+  left: var(--confetti-left);
+  width: var(--confetti-size);
+  height: calc(var(--confetti-size) * .55);
+  background: var(--confetti-color);
+  border-radius: 1px;
+  opacity: 0;
+  animation: confetti-fall var(--confetti-duration) var(--confetti-delay) cubic-bezier(.18, .65, .35, 1) forwards;
+}
+
+@media (max-width: 520px) {
+  .birthday-announcement {
+    padding: 15px 14px 17px;
+  }
+
+  .birthday-announcement strong {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .birthday-kicker,
+  .birthday-wish {
+    letter-spacing: .08em;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .birthday-announcement strong {
+    animation: birthday-entrance .65s cubic-bezier(.2, .8, .2, 1) both;
+  }
+}
+
+@keyframes birthday-entrance {
+  0% {
+    opacity: 0;
+    color: #ffe175;
+    transform: scale(.92) translateY(8px);
+    text-shadow: 0 0 22px rgba(255, 225, 117, .85);
+  }
+
+  58% {
+    opacity: 1;
+    color: #fff1a8;
+    text-shadow: 0 0 16px rgba(255, 225, 117, .65);
+  }
+
+  100% {
+    opacity: 1;
+    color: #fff;
+    transform: scale(1) translateY(0);
+    text-shadow: 0 3px 0 rgba(0, 0, 0, .18);
+  }
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(.25) rotate(0);
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  18% {
+    opacity: 1;
+    transform: translate3d(var(--confetti-burst-x), var(--confetti-burst-y), 0) scale(1) rotate(160deg);
+  }
+
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--confetti-drift), 110vh, 0) scale(.85) rotate(var(--confetti-spin));
+  }
+}
+
+@keyframes birthday-banner-sweep {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+
+@keyframes birthday-banner-glow {
+  0%, 100% { box-shadow: 0 8px 24px rgba(40, 35, 41, .2); }
+  35% { box-shadow: 0 10px 42px rgba(218, 166, 55, .75); }
+}
