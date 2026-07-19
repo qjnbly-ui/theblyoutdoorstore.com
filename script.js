@@ -39,18 +39,46 @@ carousel?.addEventListener('mouseenter', () => window.clearInterval(carouselTime
 carousel?.addEventListener('mouseleave', startCarousel);
 startCarousel();
 
-contactForm?.addEventListener('submit', (event) => {
+if (contactForm) {
+  const startedAt = contactForm.querySelector('[name="startedAt"]');
+  startedAt.value = Date.now();
+}
+
+contactForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const form = new FormData(contactForm);
-  const subject = form.get('subject');
-  const body = [
-    form.get('message'),
-    '',
-    `Name: ${form.get('name')}`,
-    `Email: ${form.get('email')}`,
-    `Phone: ${form.get('phone') || 'Not provided'}`
-  ].join('\n');
-  window.location.href = `mailto:info@theblyoutdoorstore.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+  const status = contactForm.querySelector('#contact-status');
+  const formData = new FormData(contactForm);
+  const payload = Object.fromEntries(formData.entries());
+
+  submitButton.disabled = true;
+  submitButton.textContent = 'Sending…';
+  status.textContent = '';
+  status.className = 'form-status';
+
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.error || 'We could not send your message. Please try again.');
+    }
+
+    contactForm.reset();
+    contactForm.querySelector('[name="startedAt"]').value = Date.now();
+    status.textContent = 'Thanks! Your message has been sent to the store.';
+    status.classList.add('is-success');
+  } catch (error) {
+    status.textContent = error.message;
+    status.classList.add('is-error');
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Send Message';
+  }
 });
 
 function playSiteIntro() {

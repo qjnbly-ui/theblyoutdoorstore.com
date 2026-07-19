@@ -143,6 +143,34 @@
   outline: 2px solid rgba(0,139,75,.15);
 }
 
+.form-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-form button:disabled {
+  cursor: wait;
+  opacity: .65;
+  transform: none;
+}
+
+.form-status {
+  min-height: 1.7em;
+  margin: 14px 0 0;
+  font-weight: 700;
+}
+
+.form-status.is-success {
+  color: var(--green);
+}
+
+.form-status.is-error {
+  color: #9b2c24;
+}
+
 .map-section {
   position: relative;
   min-height: 560px;
