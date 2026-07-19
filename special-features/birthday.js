@@ -32,7 +32,9 @@ function showBirthdayAnnouncement() {
     ${isHomePage ? '' : `
       <span class="birthday-wildlife-runner" aria-hidden="true">
         <i class="birthday-wildlife-shadow"></i>
-        <img class="birthday-wildlife-leap" src="/assets/cougar-leap.png" alt="">
+        <span class="birthday-wildlife-sprite">
+          <img src="/assets/cougar-run-sprite.png" alt="">
+        </span>
       </span>
     `}
   `;
