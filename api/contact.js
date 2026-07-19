@@ -1,5 +1,5 @@
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
-const RECIPIENT = 'qjnbly@hotmail.com';
+const RECIPIENT = 'theoutdoorstore2016@gmail.com';
 const DEFAULT_FROM = 'The Bly Outdoor Store <info@theblyoutdoorstore.com>';
 const STORE_EMAIL = 'info@theblyoutdoorstore.com';
 const STORE_EMAIL_LINK = 'theoutdoorstore2016@gmail.com';
