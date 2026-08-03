@@ -7,7 +7,7 @@
   const heistKey = 'bly-bigfoot-letter-heist-v2';
 
   if (!isHomePage || reducedMotion || compactLayout || saveData) return;
-  if (!forced && (sessionStorage.getItem(heistKey) === 'true' || Math.random() > .42)) return;
+  if (!forced && sessionStorage.getItem(heistKey) === 'true') return;
 
   const scriptUrl = document.currentScript.src;
   const posePaths = [1, 2, 3, 4, 5].map((number) => new URL(`../assets/bigfoot-heist-pose-${number}.png`, scriptUrl).href);
