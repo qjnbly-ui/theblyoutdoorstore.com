@@ -1,7 +1,7 @@
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 const RECIPIENT = 'theoutdoorstore2016@gmail.com';
-const DEFAULT_FROM = 'The Bly Outdoor Store <info@theblyoutdoorstore.com>';
-const STORE_EMAIL = 'info@theblyoutdoorstore.com';
+const DEFAULT_FROM = 'The Bly Outdoor Store <theoutdoorstore2016@gmail.com>';
+const STORE_EMAIL = 'theoutdoorstore2016@gmail.com';
 const STORE_EMAIL_LINK = 'theoutdoorstore2016@gmail.com';
 const STORE_LOGO = 'https://vdbjlgmbpykjblprqnak.supabase.co/storage/v1/object/public/website-assets-public/a2f7a988-fc9f-4e54-ad60-889beeb79cd8/9f482d52-7bf9-4a31-a778-bb5d114c48be/v1-theblyoutdoorstorelogo.png';
 
