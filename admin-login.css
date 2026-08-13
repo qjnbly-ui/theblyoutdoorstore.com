@@ -1,0 +1,22 @@
+nav a.admin-login {
+  padding: 10px 16px;
+  border: 1px solid var(--green);
+  color: var(--green);
+  transition: background-color .2s, border-color .2s, color .2s, transform .2s;
+}
+
+nav a.admin-login:hover,
+nav a.admin-login:focus-visible {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 850px) {
+  nav a.admin-login {
+    margin-top: 8px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+}
